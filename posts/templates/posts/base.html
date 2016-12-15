@@ -11,7 +11,10 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+   
+    <script src="{% static '/posts/js/my.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/posts/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static '/posts/css/sweetalert.css' %}" />
 
     <style>
 
@@ -115,24 +118,24 @@
                     </li>
                    
                     <li class="item-plain">
-                        <a href="" class="nav-item">
+                        <a href="" class="nav-item" id="popup3">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add album
                         </a>
 
                     </li>
                     <li class="item-plain">
-                        <a href="" class="nav-item">
+                        <a href="" class="nav-item" id="popup2">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Log out
                         </a>
 
                     </li>
                     <li class="item-plain">
-                        <a href="" class="nav-item">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; This is changed
+                        <a href="" class="nav-item" id="loginpopup">
+                            <span class="glyphicon glyphicon-off"  aria-hidden="true"></span>&nbsp; Log In
                         </a>
 
                     </li>
-                    <li class="item-plain">
+                    <li class="item-plain" id="popup4">
                         <a href="" class="nav-item">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Registration
                         </a>
@@ -164,8 +167,8 @@
         </div>
     </div>
 
-   
-
+ <script src="{% static '/posts/js/sweetalert.min.js' %}"></script>
+<script src="{% static '/posts/js/my.js' %}"></script>
 </body>
 
 </html>
