@@ -1,0 +1,46 @@
+{% extends 'posts/base.html' %} {% block body %}
+
+<div class="container" style="margin-bottom: 80px;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div id="postlist">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <h3 class="pull-left">{{ post.title }}</h3>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="pull-right">
+                                        <small><em>{{ post.updated }}</em></small>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        {% if post.image %}
+                        <a href="#" class="img-link">
+                            <img alt="Image" class="post-thumbnail img-responsive img-rounded pull-left" src="{{ post.image.url }}" />
+                        </a>
+                        {% endif %}
+                        <p>{{ post.content | linebreaks}}</p> {% comment %}<a href="#">Read more</a>{% endcomment %}
+                    </div>
+
+                    <div class="panel-footer">
+                        <span class="label label-default">Tag</span>
+                        <span class="label label-default">Tag</span>
+                        <span class="label label-default">Tag</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center"><a href="#" id="loadmore" class="btn btn-primary">Older Posts...</a></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
