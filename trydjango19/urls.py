@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-app_name = 'trydjango19'
+
 
 urlpatterns = [
+    url(r'^learn/', include("learndjango.urls", namespace='learndjango')),
     url(r'^admin/', admin.site.urls, name='admin'),
+    url(r'^test/', include("tree.urls",namespace='test')),
     url(r'^', include("posts.urls",namespace='posts')),
 ]
 

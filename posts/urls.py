@@ -10,11 +10,11 @@ urlpatterns = [
     url(r'^create/$', views.post_create, name='create'),
 
     #/post/2000
-    url(r'^detail/(?P<id>\d+)/$', views.post_detail, name='detail'),
+    url(r'^(?P<slug>[\w-]+)/$', views.post_detail, name='detail'),
     
     #/edit/1000
-    url(r'^edit/(?P<id>\d+)/$', views.post_update, name='update'),
+    url(r'^(?P<slug>[\w-]+)/edit/$', views.post_update, name='update'),
 
     #/delete/1000
-    url(r'^delete/$', views.post_delete, name='delete'),
+    url(r'^(?P<slug>[\w-]+)/delete/$', views.post_delete, name='delete'),
 ]

@@ -12,9 +12,14 @@
                     <div class="text-center">
                         <div class="row">
                             <div class="col-sm-9">
-                                <a href="{{ post.get_id }}">
-                                    <h3 class="pull-left">{{ post.title }}</h3>
+                                <a href="{{ post.get_absolute_url }}">
+                                    <h3 class="pull-left">{{ post.title }}</h3><br><br/>
+                                    {% if post.draft %}
+                                    <h4 class="pull-left" style="color: red;">Draft</h4>
+                                    {% endif %}
+                                   
                                 </a>
+                                
                             </div>
                             <div class="col-sm-3">
                                 <h4 class="pull-right">
@@ -35,7 +40,8 @@
 </div>
 
 <div class="panel-footer">
-    <a href="{% url 'posts:update' post.id %}"><span class="label label-default">Edit</span></a>
+    Written by {{ post.user }}
+    <a href="{% url 'posts:update' post.slug %}"><span class="label label-default">Edit</span></a>
     <span class="label label-default">Tag</span>
     <span class="label label-default">Tag</span>
 </div>

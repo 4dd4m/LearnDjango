@@ -1,0 +1,22 @@
+{% extends 'posts/base.html' %}
+{% block title %}Registration {% endblock %}
+{%block albums_active %}active {% endblock %}
+{% block body %}
+
+{% for category in categories %}
+   {{ category.name }} <br>
+
+
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

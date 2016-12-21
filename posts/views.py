@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import HttpResponse, HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import HttpResponse, HttpResponseRedirect, Http404
 from . models import Post
 from . forms import PostForm
 
 
 def post_create(request):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise PermissionDenied
+
     form = PostForm(request.POST or None, request.FILES or None)
     
     if form.is_valid():
@@ -20,7 +24,7 @@ def post_create(request):
 
 
 
-def post_list(request):
+def post_list(request, slug=None):
     queryset_list = Post.objects.all()
     pgntr = Paginator(queryset_list, 2) # Show 25 object_list per page
 
@@ -41,8 +45,8 @@ def post_list(request):
 
 
 
-def post_detail(request, id=None):
-    result = get_object_or_404(Post, id=id)
+def post_detail(request, slug=None):
+    result = get_object_or_404(Post, slug=slug)
     context = {
         'post' : result,
         'title' : 'My Posts'
@@ -50,8 +54,10 @@ def post_detail(request, id=None):
     return render(request, 'posts/post.html', context)
 
 
-def post_update(request, id):
-    instance = get_object_or_404(Post, id=id)
+def post_update(request, slug=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    instance = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None,instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -65,6 +71,11 @@ def post_update(request, id):
     
     return render(request, 'posts/post_form.html', context)
 
-def post_delete(request):
-    return render(request, 'posts/base.html')
+def post_delete(request, slug=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
+	instance = get_object_or_404(Post, slug=slug)
+	instance.delete()
+	messages.success(request, "Successfully deleted")
+	return redirect("posts:list")
 

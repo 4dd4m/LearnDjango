@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Satisfy" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+   
+    <script src="{% static '/posts/js/my.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/posts/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static '/posts/css/sweetalert.css' %}" />
+
+    <style>
+
+.footercontainer{
+    background: black;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-radius: 0;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+}
+
+.fa-twitter {
+    color: #4099FF;
+}
+
+.fa-facebook {
+    color: #3B5998;
+}
+
+.fa-youtube-play {
+    color: #e52d27;
+}
+
+.fa-rss {
+    color: #FF6600;
+}
+
+.fa-vine {
+    color: #00a478;
+}
+
+.fa-flickr {
+    color: #ff0084;
+}
+
+.fa-twitch {
+    color: #6441A5;
+}
+
+.fa-linkedin {
+    color: #007bb6;
+}
+
+.fa {
+    opacity: 0.7;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+
+.fa:hover{
+    opacity: 1;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="{% url 'posts:index' %}">Adam</a>
+            </div>
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="" class="nav-item">
+                            <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Posts
+                        </a>
+                    </li>
+
+
+                    <li class="">
+                        <a href="{% url 'posts:create' %}" class="nav-item">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add a new post
+                        </a>
+                    </li>
+
+                </ul>
+
+                <form class="navbar-form navbar-left form-inline" role="search" method="GET" action="#">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="q" value="">
+                        <button type="submit" class="btn btn-default">Search</button>
+                    </div>
+
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="item-plain">
+                        <a href="../../../admin" class="nav-item">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp; Admin
+                        </a>
+                    </li>
+                   
+                    <li class="item-plain">
+                        <a href="" class="nav-item" id="popup3">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add album
+                        </a>
+
+                    </li>
+                    <li class="item-plain">
+                        <a href="" class="nav-item" id="popup2">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Log out
+                        </a>
+
+                    </li>
+                    <li class="item-plain">
+                        <a href="" class="nav-item" id="loginpopup">
+                            <span class="glyphicon glyphicon-off"  aria-hidden="true"></span>&nbsp; Log In
+                        </a>
+
+                    </li>
+                    <li class="item-plain" id="popup4">
+                        <a href="" class="nav-item">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Registration
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    {% block body %} {% endblock %}
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="footer container-fluid footercontainer text-center navbar-fixed-bottom">
+        <div class="container">
+            <a href='#'><i class="fa fa-twitch fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-youtube-play fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-rss fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-vine fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-linkedin fa-3x fa-fw"></i></a>
+        </div>
+    </div>
+
+ <script src="{% static '/posts/js/sweetalert.min.js' %}"></script>
+<script src="{% static '/posts/js/my.js' %}"></script>
+</body>
+
+</html>
