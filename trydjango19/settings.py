@@ -15,7 +15,10 @@ SECRET_KEY = '$!4rs#p&&-d1l8dlohtn89^y_-i_!qd-6p-jfv2o)i@8&@0=bl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'adamlearnsdjango.pythonanywhere.com',
+    'www.adamlearnsdjango.pythonanywhere.com'
+]
 
 
 # Application definition
