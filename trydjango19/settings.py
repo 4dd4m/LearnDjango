@@ -25,7 +25,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'posts',
-    'learndjango',
     'tree',
     'mptt',
     'django.contrib.admin',
