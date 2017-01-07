@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="utf-8">
+		<title>DayZ Compass Helper</title>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.theme.css">
+		<link rel="shortcut icon" href="http://www.sarahjanesews.com/favicon.ico" />
+        <script src=" https://cdn.jsdelivr.net/bootbox/4.4.0/bootbox.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.js"></script>
+        <script src="http://cdn.sobekrepository.org/includes/jquery-rotate/2.2/jquery-rotate.min.js"></script>
+<script>
+
+function init(){
+	
+	if(localStorage.getItem('x1') == null){
+			localStorage.setItem('x1',0);
+		}
+		else{
+		$("#x1").val(localStorage.getItem('x1'));
+		}
+	if(localStorage.getItem('x2') == null){
+			localStorage.setItem('x2',0);
+		}
+		else{
+		$("#x2").val(localStorage.getItem('x2'));
+		}
+		
+	if(localStorage.getItem('y1') == null){
+			localStorage.setItem('y1',0);
+		}
+		else{
+		$("#y1").val(localStorage.getItem('y1'));
+		}
+	if(localStorage.getItem('y2') == null){
+			localStorage.setItem('y2',0);
+		}
+		else{
+		$("#y2").val(localStorage.getItem('y2'));
+		}
+
+}
+
+function saveCoords(){
+		localStorage.setItem('x1',x1);
+		localStorage.setItem('x2',x2);
+		localStorage.setItem('y1',y1);
+		localStorage.setItem('y2',y2);
+		}
+
+function calcDegreeBack(degree){
+		if(degree - 180 >= 0){
+		way = degree - 180;
+			return way;
+		}else{
+			zeropoint = Math.abs(degree - 180);
+			way = 360 - zeropoint;
+			return way; 
+		}
+		}
+		
+
+
+function getDegree(){
+
+		x1 = $("#x1").val();
+		x2 = $("#x2").val();
+		y1 = $("#y1").val();
+		y2 = $("#y2").val();
+
+		distx = x2 - x1;
+		disty = y2 - y1;
+		totaldistance = Math.sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)));
+		minutes = ((totaldistance * 100) / 1000) * 3;
+		minutes = Math.ceil( minutes );
+		degreediff = Math.asin(distx / totaldistance) *(180/Math.PI);
+		saveCoords();
+
+		if(distx == 0 && disty == 0){
+			degree = 0;
+		}
+
+
+		if(distx > 0 && disty > 0){
+			// + + 
+			degree = 180 - degreediff;
+		}
+		if(distx > 0 && disty < 0){
+			// + -
+			degree = degreediff;
+
+		}
+		if(distx < 0 && disty < 0){
+			// - -
+			degree = 360 + degreediff;
+
+		}
+		if(distx < 0 && disty > 0){
+			// - +
+			degree = 180 + Math.abs(degreediff);
+		}
+
+		degree = Math.round(degree);
+		$("#arrow").rotate(degree);
+		$("#dir").html(degree + "°");
+		$("#time").html("Roughly  ~" + minutes + " min (flat).");
+		
+		north = 360-degree;
+		
+		
+		$("#dirback").html(calcDegreeBack(degree) + "°");
+		$("#arrowback").rotate(calcDegreeBack(degree));
+
+//alert(degreediff);
+//alert(minutes);
+//alert(distx); 
+//alert(disty); 
+
+}
+
+$( document ).ready(function() {
+init();
+getDegree();
+
+$("#fromlist").change(function(){
+		coords = $(this).val().split("|");
+		x = coords[0];
+		y = coords[1];
+		$("#x1").val(x);
+		$("#y1").val(y);
+});
+
+$("#tolist").change(function(){
+		coords = $(this).val().split("|");
+		x = coords[0];
+		y = coords[1];
+		$("#x2").val(x);
+		$("#y2").val(y);
+});
+});
+function main(){
+getDegree();
+saveCoords();
+}
+</script>
+
+<style>
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('fonts/glyphicons-halflings-regular.eot');
+  src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: auto;}
+.form-control{
+	height: 50px;
+}
+
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span {
+    width: 15px;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
+}
+
+.btn{
+	font-size: 12px;
+}
+
+
+</style>
+
+   <body style="text-align: center;">
+   <div class="row" style="text-align: center;">
+	<div class="col-md-12" style="text-align: left; margin-bottom: 20px;">
+	<h1 style="text-align: center;">DayZ Compass Helper</h2>
+	 <p style="text-align: center;">
+      Find Your Shortest Way In DayZ
+     </p>
+	</div>
+	
+	<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: "Courier New", Courier, monospace; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="formden_header">
+    
+    </div>
+    <form class="form-horizontal" method="post">
+     <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+       <div class="input-group">
+        <div class="input-group-addon">
+         Your X
+        </div>
+        <input class="form-control" id="x1" name="x1" placeholder="0.00" type="text"/>
+       </div>
+       <span class="help-block" id="hint_x1">
+        This is your X coordinate. On Izurvive.com, this is the first (mouseover) coordinate
+       </span>
+      </div>
+     </div>
+     <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+       <div class="input-group">
+        <div class="input-group-addon">
+         Your Y
+        </div>
+        <input class="form-control" id="y1" name="y1" placeholder="0.00" type="text"/>
+       </div>
+       <span class="help-block" id="hint_y1">
+        This is your Y coordinate. On Izurvive.com, this is the second (mouseover) coordinate
+       </span>
+      </div>
+	       <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+	  <select id="fromlist" class="form-control">
+<option value="0,0">Select A Direction...</option>
+<option value="56|90">Hills Have eyes</option>
+<option value="12|82">Myshkino Tents</option>
+<option value="45|70">Vybor Military Base</option>
+<option value="45|129">Balota</option>
+<option value="140|2">Belaya Polana</option>
+<option value="151|15">Berezhki</option>
+<option value="129|53">Berezino</option>
+<option value="33|114">Bor</option>
+<option value="56|128">Chapaevsk</option>
+<option value="121|16">Chernaya Polana</option>
+<option value="67|127">Chernogorsk</option>
+<option value="129|3">Dobroe</option>
+<option value="112|87">Dolina</option>
+<option value="33|104">Drozhino</option>
+<option value="66|117">Dubky</option>
+<option value="104|55">Dubrovka</option>
+<option value="103|132">Elektrozavodsk</option>
+<option value="95|65">Gorka</option>
+<option value="59|50">Grishino</option>
+<option value="84|86">Guglovo</option>
+<option value="85|34">Gvozdno</option>
+<option value="53|67">Kabanino</option>
+<option value="19|131">Kamenka</option>
+<option value="66|8">Kamensk</option>
+<option value="121|118">Kamyshovo</option>
+<option value="125|7">Karmanovka</option>
+<option value="122|44">Khelm</option>
+<option value="36|128">Komarovo</option>
+<option value="44|107">Kozlovka</option>
+<option value="64|3">Krasnoe</option>
+<option value="111|30">Krasnostav</option>
+<option value="27|53">Lopatino</option>
+<option value="79|23">Mamino</option>
+<option value="75|102">Mogilevka</option>
+<option value="112|98">Msta</option>
+<option value="20|80">Myshkino</option>
+<option value="58|106">Nadezhdino</option>
+<option value="92|7">Nagornoe</option>
+<option value="129|74">Nizhnoye</option>
+<option value="36|22">Novaya Petrovka</option>
+<option value="116|9">Novodmitrovsk</option>
+<option value="61|121">Novoselky</option>
+<option value="70|76">Novy Sobor</option>
+<option value="133|24">Olsha</option>
+<option value="121|80">Orlovets</option>
+<option value="16|115">Pavlovo</option>
+<option value="44|89">Pogorevka</option>
+<option value="106|73">Polana</option>
+<option value="57|18">Polesovo</option>
+<option value="79|121">Prigorodki</option>
+<option value="49|97">Pulkovo</option>
+<option value="91|115">Pusta</option>
+<option value="30|74">Pustoshka</option>
+<option value="61|26">Ratnoe</option>
+<option value="47|85">Rogovo</option>
+<option value="57|8">Samorodok</option>
+<option value="79|27">Severograd</option>
+<option value="96|87">Shakhovka</option>
+<option value="14|34">Sinistok</option>
+<option value="114|2">Smirnovo</option>
+<option value="134|92">Solnichniy</option>
+<option value="25|90">Sosnovka</option>
+<option value="101|99">Staroye</option>
+<option value="61|76">Stary Sobor</option>
+<option value="49|2">Stary Yar</option>
+<option value="95|15">Svergino</option>
+<option value="139|21">Svetlojarsk</option>
+<option value="34|5">Tisy</option>
+<option value="27|30">Topolniki</option>
+<option value="76|19">Troitskoe</option>
+<option value="128|109">Tulga</option>
+<option value="135|12">Turovo</option>
+<option value="22|43">Vavilovo</option>
+<option value="38|64">Vybor</option>
+<option value="99|49">Vyshnaya Dubrovka</option>
+<option value="65|93">Vyshnoye</option>
+<option value="45|21">Zaprudnoe</option>
+<option value="27|99">Zelenogorsk</option>
+</select>
+       <span class="help-block" id="hint_x1">
+       Or simply just pick a starter town
+       </span>
+     </div>
+     </div>
+     </div>
+     <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+       <div class="input-group">
+        <div class="input-group-addon">
+         Target X
+        </div>
+        <input class="form-control" id="x2" name="x2" placeholder="0.00" type="text"/>
+       </div>
+      </div>
+     </div>
+     <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+       <div class="input-group">
+        <div class="input-group-addon">
+         Target Y
+        </div>
+        <input class="form-control" id="y2" name="y2" placeholder="0.00"  type="text"/>
+       </div>
+      </div>
+     </div>
+	   <div class="form-group form-group-lg">
+      <div class="col-sm-10 col-sm-offset-2">
+	  <select id="tolist" class="form-control">
+	  <option value="0,0">Select A Direction...</option>
+	  <option value="56|90">Hills Have eyes</option>
+<option value="12|82">Myshkino Tents</option>
+<option value="45|70">Vybor Military Base</option>
+<option value="45|129">Balota</option>
+<option value="140|2">Belaya Polana</option>
+<option value="151|15">Berezhki</option>
+<option value="129|53">Berezino</option>
+<option value="33|114">Bor</option>
+<option value="56|128">Chapaevsk</option>
+<option value="121|16">Chernaya Polana</option>
+<option value="67|127">Chernogorsk</option>
+<option value="129|3">Dobroe</option>
+<option value="112|87">Dolina</option>
+<option value="33|104">Drozhino</option>
+<option value="66|117">Dubky</option>
+<option value="104|55">Dubrovka</option>
+<option value="103|132">Elektrozavodsk</option>
+<option value="95|65">Gorka</option>
+<option value="59|50">Grishino</option>
+<option value="84|86">Guglovo</option>
+<option value="85|34">Gvozdno</option>
+<option value="53|67">Kabanino</option>
+<option value="19|131">Kamenka</option>
+<option value="66|8">Kamensk</option>
+<option value="121|118">Kamyshovo</option>
+<option value="125|7">Karmanovka</option>
+<option value="122|44">Khelm</option>
+<option value="36|128">Komarovo</option>
+<option value="44|107">Kozlovka</option>
+<option value="64|3">Krasnoe</option>
+<option value="111|30">Krasnostav</option>
+<option value="27|53">Lopatino</option>
+<option value="79|23">Mamino</option>
+<option value="75|102">Mogilevka</option>
+<option value="112|98">Msta</option>
+<option value="20|80">Myshkino</option>
+<option value="58|106">Nadezhdino</option>
+<option value="92|7">Nagornoe</option>
+<option value="129|74">Nizhnoye</option>
+<option value="36|22">Novaya Petrovka</option>
+<option value="116|9">Novodmitrovsk</option>
+<option value="61|121">Novoselky</option>
+<option value="70|76">Novy Sobor</option>
+<option value="133|24">Olsha</option>
+<option value="121|80">Orlovets</option>
+<option value="16|115">Pavlovo</option>
+<option value="44|89">Pogorevka</option>
+<option value="106|73">Polana</option>
+<option value="57|18">Polesovo</option>
+<option value="79|121">Prigorodki</option>
+<option value="49|97">Pulkovo</option>
+<option value="91|115">Pusta</option>
+<option value="30|74">Pustoshka</option>
+<option value="61|26">Ratnoe</option>
+<option value="47|85">Rogovo</option>
+<option value="57|8">Samorodok</option>
+<option value="79|27">Severograd</option>
+<option value="96|87">Shakhovka</option>
+<option value="14|34">Sinistok</option>
+<option value="114|2">Smirnovo</option>
+<option value="134|92">Solnichniy</option>
+<option value="25|90">Sosnovka</option>
+<option value="101|99">Staroye</option>
+<option value="61|76">Stary Sobor</option>
+<option value="49|2">Stary Yar</option>
+<option value="95|15">Svergino</option>
+<option value="139|21">Svetlojarsk</option>
+<option value="34|5">Tisy</option>
+<option value="27|30">Topolniki</option>
+<option value="76|19">Troitskoe</option>
+<option value="128|109">Tulga</option>
+<option value="135|12">Turovo</option>
+<option value="22|43">Vavilovo</option>
+<option value="38|64">Vybor</option>
+<option value="99|49">Vyshnaya Dubrovka</option>
+<option value="65|93">Vyshnoye</option>
+<option value="45|21">Zaprudnoe</option>
+<option value="27|99">Zelenogorsk</option>
+</select>
+       <span class="help-block" id="hint_x1">
+       Or simply just pick a target town
+       </span>
+     </div>
+     </div>
+     <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+       <a class="btn btn-primary " name="submit" id="submit" onClick="main()">
+        Get Direction
+       </a>
+      </div>
+     </div>
+    </form>
+   </div>
+<span id="time"></span>	
+	<h1>Head towards: <span id="dir"></span></h1>
+	<img id="arrow" src="https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/actions/agt_uninstall-product.png" style="height: 100px; width:100px" alt="Valid" />
+	<h1>Head Back: <span id="dirback"></span></h1>
+	<img id="arrowback" src="https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/actions/agt_uninstall-product.png" style="height: 100px; width:100px" alt="Valid" />
+  </div>
+ </div>
+</div>
+	</div>
+<footer>
+  <p> 1/8/16 - <strong>Developer Preview</strong> - <a href="mailto:magicalcritical@gmail.com">Adam T.</a></p>
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="L3GWD8AH5YU8N">
+<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" name="submit" alt="PayPal ֠The safer, easier way to pay online.">
+<img alt="" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+ <img src="http://summerschool.politologia.uni.wroc.pl/gfx/validHTML5.gif" alt="Valid" />
+</footer>
+</body>
+</html>

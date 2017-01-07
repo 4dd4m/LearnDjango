@@ -17,7 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'adamlearnsdjango.pythonanywhere.com',
-    'www.adamlearnsdjango.pythonanywhere.com'
+    'www.adamlearnsdjango.pythonanywhere.com',
+    '127.0.0.1'
 ]
 
 

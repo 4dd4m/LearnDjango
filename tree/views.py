@@ -10,3 +10,7 @@ def show_genres(request):
     return render(request, "tree/genres.html",
                           {'nodes': nodes}
                           )
+
+
+def direction(request):
+    return render(request, "tree/compass.html")
