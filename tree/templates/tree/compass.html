@@ -115,7 +115,6 @@ function getDegree(){
 		
 		
 		$("#dirback").html(calcDegreeBack(degree) + "°");
-		$("#arrowback").rotate(calcDegreeBack(degree));
 
 //alert(degreediff);
 //alert(minutes);
@@ -129,19 +128,35 @@ init();
 getDegree();
 
 $("#fromlist").change(function(){
-		coords = $(this).val().split("|");
-		x = coords[0];
-		y = coords[1];
+		fromcoords = $(this).val().split("|");
+		x = fromcoords[0];
+		y = fromcoords[1];
 		$("#x1").val(x);
 		$("#y1").val(y);
+
+		x2 = $("#x2").val();
+		y2 = $("#y2").val();
+
+		if(x && y && x2 && y2){
+			getDegree();
+			saveCoords();
+		}
 });
 
 $("#tolist").change(function(){
-		coords = $(this).val().split("|");
-		x = coords[0];
-		y = coords[1];
+		tocoords = $(this).val().split("|");
+		x = tocoords[0];
+		y = tocoords[1];
 		$("#x2").val(x);
 		$("#y2").val(y);
+		
+		x1 = $("#x1").val();
+		y1 = $("#y1").val();
+
+		if(x1 && y1 && x && y){
+			getDegree();
+			saveCoords();
+		}
 });
 });
 function main(){
@@ -189,13 +204,15 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
 	font-size: 12px;
 }
 
+.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: "Courier New", Courier, monospace; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}
+
 
 </style>
 
    <body style="text-align: center;">
-   <div class="row" style="text-align: center;">
-	<div class="col-md-12" style="text-align: left; margin-bottom: 20px;">
-	<h1 style="text-align: center;">DayZ Compass Helper</h2>
+   <div class="row" style="text-align: center; background: transparent;">
+	<div class="col-lg-12" style="text-align: left; margin-bottom: 0px;">
+	<h1 style="text-align: center;">DayZ Compass Helper</h1>
 	 <p style="text-align: center;">
       Find Your Shortest Way In DayZ
      </p>
@@ -205,13 +222,13 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
 <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
 
 <!-- Inline CSS based on choices in "Settings" tab -->
-<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: "Courier New", Courier, monospace; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+<style></style>
 
 <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
-<div class="bootstrap-iso">
- <div class="container-fluid">
-  <div class="row">
-   <div class="col-md-6 col-sm-6 col-xs-12">
+<div class="bootstrap-iso" style="background: transparent;">
+ <div class="container-fluid" >
+  <div class="row" >
+   <div class="col-md-4 col-sm-4 col-xs-12">
     <div class="formden_header">
     
     </div>
@@ -224,7 +241,7 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
         </div>
         <input class="form-control" id="x1" name="x1" placeholder="0.00" type="text"/>
        </div>
-       <span class="help-block" id="hint_x1">
+       <span class="help-block">
         This is your X coordinate. On Izurvive.com, this is the first (mouseover) coordinate
        </span>
       </div>
@@ -245,7 +262,6 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
       <div class="col-sm-10 col-sm-offset-2">
 	  <select id="fromlist" class="form-control">
 <option value="0,0">Select A Direction...</option>
-<option value="56|90">Hills Have eyes</option>
 <option value="12|82">Myshkino Tents</option>
 <option value="45|70">Vybor Military Base</option>
 <option value="45|129">Balota</option>
@@ -324,7 +340,7 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
 <option value="45|21">Zaprudnoe</option>
 <option value="27|99">Zelenogorsk</option>
 </select>
-       <span class="help-block" id="hint_x1">
+       <span class="help-block">
        Or simply just pick a starter town
        </span>
      </div>
@@ -354,7 +370,6 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
       <div class="col-sm-10 col-sm-offset-2">
 	  <select id="tolist" class="form-control">
 	  <option value="0,0">Select A Direction...</option>
-	  <option value="56|90">Hills Have eyes</option>
 <option value="12|82">Myshkino Tents</option>
 <option value="45|70">Vybor Military Base</option>
 <option value="45|129">Balota</option>
@@ -433,7 +448,7 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
 <option value="45|21">Zaprudnoe</option>
 <option value="27|99">Zelenogorsk</option>
 </select>
-       <span class="help-block" id="hint_x1">
+       <span class="help-block">
        Or simply just pick a target town
        </span>
      </div>
@@ -450,8 +465,7 @@ body { font-family: Ubuntu, sans-serif; text-align: center; width: 95%; margin: 
 <span id="time"></span>	
 	<h1>Head towards: <span id="dir"></span></h1>
 	<img id="arrow" src="https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/actions/agt_uninstall-product.png" style="height: 100px; width:100px" alt="Valid" />
-	<h1>Head Back: <span id="dirback"></span></h1>
-	<img id="arrowback" src="https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/actions/agt_uninstall-product.png" style="height: 100px; width:100px" alt="Valid" />
+	<h6>Reverse Direction: <span id="dirback"></span></h6>
   </div>
  </div>
 </div>
